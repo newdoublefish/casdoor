@@ -66,6 +66,14 @@ func (syncer *Syncer) addUser(user *OriginalUser) (bool, error) {
 	return affected != 0, nil
 }
 
+func (syncer *Syncer) deleteUser(user *OriginalUser) (bool, error) {
+	res, err := adapter.Engine.ID(core.PK{user.Owner, user.Name}).Delete(&User{})
+	if err != nil {
+		return false, err
+	}
+	return res != 0, nil
+}
+
 /*func (syncer *Syncer) getOriginalColumns() []string {
 	res := []string{}
 	for _, tableColumn := range syncer.TableColumns {
