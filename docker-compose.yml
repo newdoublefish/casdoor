@@ -13,6 +13,8 @@ services:
       RUNNING_IN_DOCKER: "true"
     volumes:
       - ./conf:/conf/
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
   db:
     restart: always
     image: mysql:8.0.25
@@ -22,4 +24,4 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     volumes:
-      - /usr/local/docker/mysql:/var/lib/mysql
+      - /data:/var/lib/mysql
