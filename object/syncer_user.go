@@ -26,7 +26,7 @@ import (
 type OriginalUser = User
 
 func (syncer *Syncer) getOriginalUsers() ([]*OriginalUser, error) {
-	sql := fmt.Sprintf("select * from %s", syncer.getTable())
+	sql := fmt.Sprintf("select * from %s where deleted_at is NULL", syncer.getTable())
 	results, err := syncer.Adapter.Engine.QueryString(sql)
 	if err != nil {
 		return nil, err

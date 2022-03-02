@@ -41,6 +41,7 @@ RUN yarn install && yarn run build
 
 FROM alpine:latest
 RUN sed -i 's/https/http/' /etc/apk/repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add curl
 RUN apk add ca-certificates && update-ca-certificates
 LABEL MAINTAINER="https://casdoor.org/"
