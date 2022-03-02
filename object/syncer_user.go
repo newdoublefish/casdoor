@@ -108,8 +108,8 @@ func (syncer *Syncer) updateUser(user *OriginalUser) (bool, error) {
 }
 
 func (syncer *Syncer) updateUserForOriginalFields(user *User) (bool, error) {
-	owner, name := util.GetOwnerAndNameFromId(user.GetId())
-	oldUser := getUserById(owner, name)
+	owner, _ := util.GetOwnerAndNameFromId(user.GetId())
+	oldUser := getUserById(owner, user.Id)
 	if oldUser == nil {
 		return false, nil
 	}
