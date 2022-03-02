@@ -49,7 +49,7 @@ func initBuiltInOrganization() {
 		Favicon:       "https://cdn.casbin.com/static/favicon.ico",
 		PhonePrefix:   "86",
 		DefaultAvatar: "https://casbin.org/img/casbin.svg",
-		PasswordType:  "plain",
+		PasswordType:  "md5-salt",
 	}
 	AddOrganization(organization)
 }
@@ -66,8 +66,8 @@ func initBuiltInUser() {
 		CreatedTime:       util.GetCurrentTime(),
 		Id:                util.GenerateId(),
 		Type:              "normal-user",
-		Password:          "123",
-		DisplayName:       "Admin",
+		Password:          "e10adc3949ba59abbe56e057f20f883e",
+		DisplayName:       "Administrator",
 		Avatar:            "https://casbin.org/img/casbin.svg",
 		Email:             "admin@example.com",
 		Phone:             "12345678910",
