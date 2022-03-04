@@ -32,15 +32,26 @@ func getMd5HexDigest(s string) string {
 	return res
 }
 
-func NewMd5UserSaltCredManager() *Sha256SaltCredManager {
-	cm := &Sha256SaltCredManager{}
+func NewMd5UserSaltCredManager() *Md5UserSaltCredManager {
+	cm := &Md5UserSaltCredManager{}
 	return cm
 }
 
+func MD5V(str []byte, b ...byte) string {
+	h := md5.New()
+	h.Write(str)
+	return hex.EncodeToString(h.Sum(b))
+}
+
+
+//func (cm *Md5UserSaltCredManager) GetHashedPassword(password string, userSalt string, organizationSalt string) string {
+//	hash := getMd5HexDigest(password)
+//	res := getMd5HexDigest(hash + userSalt)
+//	return res
+//}
+
 func (cm *Md5UserSaltCredManager) GetHashedPassword(password string, userSalt string, organizationSalt string) string {
-	hash := getMd5HexDigest(password)
-	res := getMd5HexDigest(hash + userSalt)
-	return res
+	return MD5V([]byte(password))
 }
 
 func (cm *Md5UserSaltCredManager) IsPasswordCorrect(plainPwd string, hashedPwd string, userSalt string, organizationSalt string) bool {

@@ -94,4 +94,14 @@ func (syncer *Syncer) syncUsers() {
 			fmt.Printf("New oUser: %v\n", newOUser)
 		}
 	}
+
+	// 同步刪除用戶
+	for _, user := range users{
+		id := user.Id
+		if _, ok :=  oUserMap[id]; !ok{
+			syncer.deleteUser(user)
+		}
+	}
+
+
 }

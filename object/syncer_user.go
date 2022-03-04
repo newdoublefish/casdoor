@@ -26,7 +26,7 @@ import (
 type OriginalUser = User
 
 func (syncer *Syncer) getOriginalUsers() ([]*OriginalUser, error) {
-	sql := fmt.Sprintf("select * from %s", syncer.getTable())
+	sql := fmt.Sprintf("select * from %s where deleted_at is NULL", syncer.getTable())
 	results, err := syncer.Adapter.Engine.QueryString(sql)
 	if err != nil {
 		return nil, err
@@ -64,6 +64,14 @@ func (syncer *Syncer) addUser(user *OriginalUser) (bool, error) {
 	}
 
 	return affected != 0, nil
+}
+
+func (syncer *Syncer) deleteUser(user *OriginalUser) (bool, error) {
+	res, err := adapter.Engine.ID(core.PK{user.Owner, user.Name}).Delete(&User{})
+	if err != nil {
+		return false, err
+	}
+	return res != 0, nil
 }
 
 /*func (syncer *Syncer) getOriginalColumns() []string {
@@ -108,8 +116,8 @@ func (syncer *Syncer) updateUser(user *OriginalUser) (bool, error) {
 }
 
 func (syncer *Syncer) updateUserForOriginalFields(user *User) (bool, error) {
-	owner, name := util.GetOwnerAndNameFromId(user.GetId())
-	oldUser := getUserById(owner, name)
+	owner, _ := util.GetOwnerAndNameFromId(user.GetId())
+	oldUser := getUserById(owner, user.Id)
 	if oldUser == nil {
 		return false, nil
 	}
