@@ -86,14 +86,14 @@ func (syncer *Syncer) syncUsers() {
 	}
 	AddUsersInBatch(newUsers)
 
-	for _, user := range users {
-		id := user.Id
-		if _, ok := oUserMap[id]; !ok {
-			newOUser := syncer.createOriginalUserFromUser(user)
-			syncer.addUser(newOUser)
-			fmt.Printf("New oUser: %v\n", newOUser)
-		}
-	}
+	//for _, user := range users {
+	//	id := user.Id
+	//	if _, ok := oUserMap[id]; !ok {
+	//		newOUser := syncer.createOriginalUserFromUser(user)
+	//		syncer.addUser(newOUser)
+	//		fmt.Printf("New oUser: %v\n", newOUser)
+	//	}
+	//}
 
 	// 同步刪除用戶
 	for _, user := range users{
